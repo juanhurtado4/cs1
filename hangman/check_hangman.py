@@ -1,5 +1,5 @@
 import random
-
+import string
 '''
 The character "//" denotes completed todo.
 TODO//: 1st create user class
@@ -16,6 +16,7 @@ BONUS: beautiful soup is a library for web scraping
 '''
 message = {'congrats': 'Congratulations you won the game!',
             'fail': 'You died!'}
+alphabet = string.ascii_lowercase
 
 def load_word():
    # f = open('hangman_words.txt', 'r')
@@ -26,6 +27,18 @@ def load_word():
    # secret_word = random.choice(words_list)
    # # return secret_word
    return 'oxygen'
+
+def game_so_far(secret_word, letters_guessed):
+    '''
+    Returns the state of the game so far.
+    Underscores for every word that has not been guessed.
+    Loop places underscores in place of letter to hide secret word.
+    '''
+    if len(letters_guessed) == 0:
+        current_game = ' '.join(['_' for underscore in range(len(secret_word))])
+
+
+
 
 def is_word_guessed(secret_word, letters_guessed, guesses_left):
     '''
@@ -44,7 +57,7 @@ def is_word_guessed(secret_word, letters_guessed, guesses_left):
 
 
 
-def getGuessedWord(secret_word, letters_guessed):
+def get_guessed_word(secret_word, letters_guessed):
     '''
     secret_word: string, the random word the user is trying to guess.  This is selected on line 9.
     letters_guessed: list of letters that have been guessed so far.

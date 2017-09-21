@@ -1,21 +1,75 @@
+import check_hangman as check
+
+'''
+TODO: Fix get_letters_left func. Return whole alphabet if no letters have been guessed. Else return the available letters left.
+'''
 class Player():
-    def __init__(self, name, letters_guessed, letters_left, guesses_left):
+    def __init__(self, name):
+        '''
+        Initializes player instance with some default values
+        '''
         self.name = name
-        self.letters_guessed = letters_guessed
-        self.letters_left = letters_left
-        self.guesses_left = guesses_left
+        self.letters_left = check.c
+        alphabet
+        self.guesses_left = 6
+        self.letters_guessed = []
 
     def __str__(self):
         return '{name} likes to play hangman'.format(name=self.name)
 
     def get_name(self):
+        '''
+        Returns player name as a string
+        '''
         return self.name
 
-    def get_letters_guessed(self):
-        return self.letters_guessed
+    def get_letters_guessed(self, letter_guess=None):
+        '''
+        Returns default empty list of letters guessed.
+        Else returns updated list of letters guessed.
+        '''
+        if letter_guess == None:
+            return self.letters_guessed
+        else:
+            self.letters_guessed = letter_guess
+            return self.letters_guessed
 
     def get_letters_left(self):
         return self.letters_left
 
-    def get_guesses_left(self):
-        return self.guesses_left
+    def get_guesses_left(self, guess_left=None):
+        '''
+        Returns the default int of guesses (6).
+        Else returns updated int of guesses left.
+        '''
+        if guess_left == None:
+            return self.guesses_left
+        else:
+            self.guesses_left = guess_left
+            return self.guesses_left
+
+def main():
+    name = input('What is your name?: ')
+    guess = ' '
+    while guess not in check.alphabet: # Makes sure user input is a letter
+        guess = input('Please enter a letter: ')
+
+    # TODO: Create logic to check if guess equals a letter in secret word
+
+
+
+
+
+
+if __name__=='__main__':
+    main()
+
+# -----This is debugging-------
+# player1 = Player(name)
+# print(player1)
+# print(player1.get_guesses_left())
+# player1.get_guesses_left(5)
+# print(player1.get_guesses_left())
+# player2 = Player('Jose')
+# print('Player 2 guesses', player2.get_guesses_left())
+# print(player1.get_guesses_left())

@@ -50,9 +50,9 @@ def is_word_guessed(secret_word, letters_guessed, guesses_left):
     if guesses_left > 0:
         return guesses_left
     elif secret_word in letters_guessed:
-        return message['congrats']
+        return True
     else:
-        return message['fail']
+        return False
 
 
 
@@ -101,4 +101,4 @@ def hangman(secret_word):
 
 
 secret_word = load_word()
-hangman(load_word())
+# hangman(load_word())

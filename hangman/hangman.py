@@ -9,8 +9,7 @@ class Player():
         Initializes player instance with some default values
         '''
         self.name = name
-        self.letters_left = check.c
-        alphabet
+        self.letters_left = check.alphabet
         self.guesses_left = 6
         self.letters_guessed = []
 
@@ -31,7 +30,7 @@ class Player():
         if letter_guess == None:
             return self.letters_guessed
         else:
-            self.letters_guessed = letter_guess
+            self.letters_guessed.append(letter_guess)
             return self.letters_guessed
 
     def get_letters_left(self):
@@ -49,10 +48,33 @@ class Player():
             return self.guesses_left
 
 def main():
+    '''
+    Runs the main functionality of game
+    '''
     name = input('What is your name?: ')
-    guess = ' '
-    while guess not in check.alphabet: # Makes sure user input is a letter
-        guess = input('Please enter a letter: ')
+    print('The word to be guessed has {len_secret_word} letters'.format(len(check.secret_word)))
+    player1 = Player(name)
+    num_guess_left = 6
+    while not is_word_guessed:
+        if player1.get_guesses_left() < 1: # logic if player fails
+            print(check.message['fail'])
+            play_again = input('Play again?\nyes | no ')
+            while play_again != 'yes' or play_again != 'no': # Enforces user inputs yes or no at the end of game.
+                play_again = input('Play again?\nyes | no ')
+            if play_again == 'yes':
+                main()
+            else:
+                break
+        while guess not in check.alphabet: # Makes sure user input is a letter
+            guess = input('Please guess a letter: ')
+
+        num_guesses_left -= 1
+        player1.get_guesses_left(num_guesses_left)
+        player1.get_letters_guessed(guess)
+
+        if check.check_guess(guess):
+
+
 
     # TODO: Create logic to check if guess equals a letter in secret word
 

@@ -32,19 +32,27 @@ def game_so_far(secret_word, letters_guessed):
         current_game = [underscore for underscore in current_game] # 35
         print('current game after first else:', current_game)
         for letter in letters_guessed:
+            print('index function first loop, secret_word and letter:', secret_word, letter)
             print('index function first loop:', index_correct_letter(secret_word, letter))
-            if index_correct_letter(secret_word, letter) != 'false':
-                if type(index_correct_letter(secret_word, letter)) == type(list('test')):
-                    for index in range(len(index_correct_letter(secret_word, letter))):
-                        # current_game = [letter for letter in current_game] # Moving 35
-                        print('length of current game:', len(current_game))
-                        print('index:', index)
-                        print('list index out of range:', index_correct_letter(secret_word,letter)[index])
-                        current_game[index_correct_letter(secret_word,letter)[index]] =    letter
+            print('type index function first loop:', type(index_correct_letter(secret_word, letter)))
+            # if index_correct_letter(secret_word, letter) != 'false':
+            if type(index_correct_letter(secret_word, letter)) == type(list('test')): #39
+                print('yes')
+                # if type(index_correct_letter(secret_word, letter)) == type(list('test')):# Moving 39
+                for index in range(len(index_correct_letter(secret_word, letter))):
+                    # current_game = [letter for letter in current_game] # Moving 35
+                    print('length of current game:', len(current_game))
+                    print('index:', index)
+                    print('list index out of range:',index_correct_letter(secret_word,letter)[index])
+                    current_game[index_correct_letter(secret_word,letter)[index]]=    letter
+                    print('test shouldnt show')
 
+            elif type(index_correct_letter(secret_word, letter)) == type(1):
+                print('no')
                 # current_game = [letter for letter in current_game]
-                # current_game[index_correct_letter(secret_word, letter)] = letter
-                # First I need to fix multiple letters then else statement for regular letters
+                print('last letter:', letter)
+                current_game[index_correct_letter(secret_word, letter)] = letter
+                # First I need to fix multiple letters then else statement forregular  letters
                 # Do print statements to see why it is index out of range
             else:
                 continue
@@ -92,9 +100,10 @@ def multiple_lttr_secret_word(secret_word):
     If multiple letters returns dictionary letter/index pairs.
     Else returns false (string).
     '''
-    return {'l': [0,2]}
+    # return {'l': [0,2]}
+    return 'false'
 # secret_word = load_word()
 # print(secret_word)
 # print(len(secret_word))
-print(game_so_far('lolipop', ['l']))
+print(game_so_far('house', ['e']))
 # print(index_correct_letter('hello', 'h'))

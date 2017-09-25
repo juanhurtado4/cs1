@@ -1,31 +1,21 @@
 import random
 import string
-'''
-The character "//" denotes completed todo.
-TODO//: 1st create user class
-TODO//: 2nd get secret word from words.txt
-TODO//: 3rd display # of guesses
-TODO: 4th take user guess / validate
-TODO: 5th check if guess in word - if yes, replace correct underscore - if no, subtract 1 from guesses left
-TODO: 6th track user guesses / append latest guess
-TODO: 7th fix load word function
-TODO//: 8th fix is_word_guessed func to check how many guesses left.
-TODO//: 8TH if there are guesses left return how many guesses left.
-TODO//: 8TH else determine if player won or lost and return msg accordingly.
-BONUS: beautiful soup is a library for web scraping
-'''
+
 message = {'congrats': 'Congratulations you won the game!',
             'fail': 'You died!'}
 alphabet = string.ascii_lowercase
 
 def load_word():
-   f = open('hangman_words.txt')
-   words_list = f.read()
-   f.close()
+    '''
+    Returns a randomly selected word to be guessed.
+    '''
+    f = open('hangman_words.txt')
+    words_list = f.read()
+    f.close()
 
-   words_list = words_list.split(' ')
-   secret_word = random.choice(words_list)
-   return secret_word
+    words_list = words_list.split(' ')
+    secret_word = random.choice(words_list)
+    return secret_word
 
 def game_so_far(secret_word, letters_guessed):
     '''
@@ -35,27 +25,31 @@ def game_so_far(secret_word, letters_guessed):
     Loop places underscores in place of letter to hide secret word.
     '''
     current_game = ''.join(['_' for underscore in range(len(secret_word))])
+    print('current game before loop:', current_game)
     if letters_guessed == 0:
         return current_game
     else:
+        current_game = [underscore for underscore in current_game] # 35
+        print('current game after first else:', current_game)
         for letter in letters_guessed:
+            print('index function first loop:', index_correct_letter(secret_word, letter))
             if index_correct_letter(secret_word, letter) != 'false':
                 if type(index_correct_letter(secret_word, letter)) == type(list('test')):
-                    for index in index_correct_letter(secret_word, letter):
-                        current_game = [letter for letter in current_game]
+                    for index in range(len(index_correct_letter(secret_word, letter))):
+                        # current_game = [letter for letter in current_game] # Moving 35
+                        print('length of current game:', len(current_game))
+                        print('index:', index)
+                        print('list index out of range:', index_correct_letter(secret_word,letter)[index])
                         current_game[index_correct_letter(secret_word,letter)[index]] =    letter
 
-                current_game = [letter for letter in current_game]
-                current_game[index_correct_letter(secret_word, letter)] = letter
+                # current_game = [letter for letter in current_game]
+                # current_game[index_correct_letter(secret_word, letter)] = letter
+                # First I need to fix multiple letters then else statement for regular letters
+                # Do print statements to see why it is index out of range
             else:
                 continue
         current_game = ''.join([letter for letter in current_game])
         return current_game
-
-
-
-
-
 
 
 def index_correct_letter(secret_word, letter_guessed):
@@ -69,7 +63,7 @@ def index_correct_letter(secret_word, letter_guessed):
         multiple_letters = multiple_lttr_secret_word(secret_word) # Dictionary of letter/index pairs
         if letter_guessed in multiple_letters:
             all_index = multiple_letters[letter_guessed]
-            return all_index
+            return all_index # Returns list
 
 
     elif letter_guessed in secret_word:
@@ -98,31 +92,9 @@ def multiple_lttr_secret_word(secret_word):
     If multiple letters returns dictionary letter/index pairs.
     Else returns false (string).
     '''
-    return {'l': [2, 3]}
-
-def hangman(secret_word):
-    '''
-    secret_word: string, the secret word to guess.
-
-    Starts up a game of Hangman in the command line.
-
-    * At the start of the game, let the user know how many
-      letters the secret_word contains.
-
-    * Ask the user to guess one letter per round.
-
-    * The user should receive feedback immediately after each guess
-      about whether their guess appears in the computer's word.
-
-    * After each round, you should also display to the user the
-      partially guessed word so far, as well as letters that the
-      user has not yet guessed.
-    '''
-    # FILL IN YOUR CODE HERE...
-    pass
-
+    return {'l': [0,2]}
 # secret_word = load_word()
 # print(secret_word)
 # print(len(secret_word))
-print(game_so_far('whitehouse', ['e']))
+print(game_so_far('lolipop', ['l']))
 # print(index_correct_letter('hello', 'h'))

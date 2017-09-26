@@ -5,6 +5,7 @@ message = {'congrats': 'Congratulations you won the game!',
             'fail': 'You died!'}
 alphabet = string.ascii_lowercase
 
+
 def load_word():
     '''
     Returns a randomly selected word to be guessed.
@@ -17,93 +18,25 @@ def load_word():
     secret_word = random.choice(words_list)
     return secret_word
 
-def game_so_far(secret_word, letters_guessed):
+def game_so_far(secret_word, str_letters):
     '''
-    Receives a string of secret_word and a list of letters_guessed
-    Returns the state of the game so far in a string.
-    Underscores for every word that has not been guessed.
-    Loop places underscores in place of letter to hide secret word.
+    Receives secret_word and str_letters as a STRING
+    Checks to see if each letter is in secret word
+    Returns STRING of the state of the game
     '''
-    current_game = ''.join(['_' for underscore in range(len(secret_word))])
-    print('current game before loop:', current_game)
-    if letters_guessed == 0:
-        return current_game
-    else:
-        current_game = [underscore for underscore in current_game] # 35
-        print('current game after first else:', current_game)
-        for letter in letters_guessed:
-            print('index function first loop, secret_word and letter:', secret_word, letter)
-            print('index function first loop:', index_correct_letter(secret_word, letter))
-            print('type index function first loop:', type(index_correct_letter(secret_word, letter)))
-            # if index_correct_letter(secret_word, letter) != 'false':
-            if type(index_correct_letter(secret_word, letter)) == type(list('test')): #39
-                print('yes')
-                # if type(index_correct_letter(secret_word, letter)) == type(list('test')):# Moving 39
-                for index in range(len(index_correct_letter(secret_word, letter))):
-                    # current_game = [letter for letter in current_game] # Moving 35
-                    print('length of current game:', len(current_game))
-                    print('index:', index)
-                    print('list index out of range:',index_correct_letter(secret_word,letter)[index])
-                    current_game[index_correct_letter(secret_word,letter)[index]]=    letter
-                    print('test shouldnt show')
+    current_game = ['_' for underscore in range(len(secret_word))]
+    for letter in str_letters:
+        for num, char in enumerate(secret_word):
+            if letter == char:
+                current_game[num] = letter
+    return ' '.join(current_game)
 
-            elif type(index_correct_letter(secret_word, letter)) == type(1):
-                print('no')
-                # current_game = [letter for letter in current_game]
-                print('last letter:', letter)
-                current_game[index_correct_letter(secret_word, letter)] = letter
-                # First I need to fix multiple letters then else statement forregular  letters
-                # Do print statements to see why it is index out of range
-            else:
-                continue
-        current_game = ''.join([letter for letter in current_game])
-        return current_game
-
-
-def index_correct_letter(secret_word, letter_guessed):
+def is_word_guessed(secret_word):
     '''
-    Function checks if letter_guessed is correct.
-    If so it returns the index (Int) of the correct letter in the secret word.
-    elif returns list of indexes if a letter is repeated.
-    Else returns false.
+    Receives secret word as a STRING
+    Returns bool if the secret word has been guessed
     '''
-    if multiple_lttr_secret_word(secret_word) != 'false':
-        multiple_letters = multiple_lttr_secret_word(secret_word) # Dictionary of letter/index pairs
-        if letter_guessed in multiple_letters:
-            all_index = multiple_letters[letter_guessed]
-            return all_index # Returns list
-
-
-    elif letter_guessed in secret_word:
-        for index in range(len(secret_word)):
-            if letter_guessed == secret_word[index]:
-                return index
-    else:
-        return 'false'
-
-def is_word_guessed(secret_word, letters_guessed):
-    '''
-    secret_word: string, the random word the user is trying to guess.  This is selected on line 9.
-    letters_guessed: list of letters that have been guessed so far.
-    returns: boolean, True only if all the letters of secret_word are in letters_guessed;
-      False otherwise
-    '''
-    if secret_word in letters_guessed:
+    if '_' not in game_so_far(secret_word, str_letters):
         return True
     else:
         return False
-
-def multiple_lttr_secret_word(secret_word):
-    '''
-    USE COUNT FUNCTION.
-    Keep track of all the repeated letters and indexes.
-    If multiple letters returns dictionary letter/index pairs.
-    Else returns false (string).
-    '''
-    # return {'l': [0,2]}
-    return 'false'
-# secret_word = load_word()
-# print(secret_word)
-# print(len(secret_word))
-print(game_so_far('house', ['e']))
-# print(index_correct_letter('hello', 'h'))

@@ -1,7 +1,10 @@
 import check_hangman as check
 
 '''
-TODO: Fix get_letters_left func. Return whole alphabet if no letters have been guessed. Else return the available letters left.
+TODO: Fix get_available_letters func. Return whole alphabet if no letters have been guessed. Else return the available letters left.
+TODO: Fix same letter entry
+TODO: Display word at the end
+TODO: Fix ending menu infinite loop
 '''
 class Player():
     def __init__(self, name):
@@ -9,9 +12,9 @@ class Player():
         Initializes player instance with some default values
         '''
         self.name = name
-        self.letters_left = check.alphabet
-        self.guesses_left = 6
-        self.letters_guessed = []
+        self.available_letters = check.alphabet
+        self.guesses_left = 5
+        self.letters_guessed = ''
 
     def __str__(self):
         return '{name} likes to play hangman'.format(name=self.name)
@@ -24,22 +27,29 @@ class Player():
 
     def get_letters_guessed(self, letter_guess=None):
         '''
-        Returns default empty list of letters guessed.
-        Else returns updated list of letters guessed.
+        Returns letters guessed
+        Default is empty string
         '''
         if letter_guess == None:
             return self.letters_guessed
         else:
-            self.letters_guessed.append(letter_guess)
+            self.letters_guessed += letter_guess
             return self.letters_guessed
 
-    def get_letters_left(self):
-        return self.letters_left
+    def get_available_letters(self, letters_guessed=None):
+        '''
+        Receives String of letters and checks if alphabet letters are in letters guessed.
+        Returns a list of letters that have not been guessed yet.
+        '''
+        if letters_guessed == None:
+            return self.available_letters
+        else:
+            self.available_letters = ' '.join([letter for letter in check.alphabet if letter in letters_guessed])
 
     def get_guesses_left(self, guess_left=None):
         '''
-        Returns the default int of guesses (6).
-        Else returns updated int of guesses left.
+        Returns the default Int of guesses (5).
+        Else returns updated Int of guesses left.
         '''
         if guess_left == None:
             return self.guesses_left
@@ -51,37 +61,48 @@ def main():
     '''
     Runs the main functionality of game
     '''
-    name = input('What is your name?: ')
-    print('The word to be guessed has {len_secret_word} letters'.format(len(check.secret_word)))
-    player1 = Player(name)
-    num_guess_left = 6
-    while not is_word_guessed:
+    secret_word = check.load_word()
+    name = input(check.message['name'])
+    print(check.message['welcome'])
+    print(check.message['length'].format(len_secret_word=len(secret_word)))
+    print(' '.join(['_' for underscore in secret_word]))
+    # print(check.game_so_far(secret_word))
+    player1 = Player(name) # Creates player instance
+
+    while not check.is_word_guessed(secret_word, player1.get_letters_guessed()):
         if player1.get_guesses_left() < 1: # logic if player fails
-            print(check.message['fail'])
-            play_again = input('Play again?\nyes | no ')
+            print(eval(check.message['lost']))
+            play_again = input(check.message['play'])
             while play_again != 'yes' or play_again != 'no': # Enforces user inputs yes or no at the end of game.
-                play_again = input('Play again?\nyes | no ')
+                play_again = input(check.message['play'])
             if play_again == 'yes':
-                main()
+                break
             else:
                 break
+
+        guess = input(check.message['guess'])
+        print('\n')
         while guess not in check.alphabet: # Makes sure user input is a letter
-            guess = input('Please guess a letter: ')
-
-        num_guesses_left -= 1
-        player1.get_guesses_left(num_guesses_left)
-        player1.get_letters_guessed(guess)
-
-        if check.check_guess(guess):
+            guess = input(check.message['guess'])
 
 
+        player1.get_letters_guessed(guess) # Updates letters guessed
+        player1.get_available_letters(guess) # Updates letters available
+        if check.is_letter_correct(secret_word, guess):
+            print(check.message['correct'])
+        else:
+            player1.get_guesses_left(player1.get_guesses_left() - 1) # Updates guesses left
+            print(check.message['incorrect'])
 
-    # TODO: Create logic to check if guess equals a letter in secret word
+        print(eval(check.message['letters_guessed']))
+        print(check.message['guesses_left'].format(guesses_left=player1.get_guesses_left()))
+        print(eval(check.message['available_letters']))
+        print(check.game_so_far(secret_word, player1.get_letters_guessed()))
 
-
-
-
-
+    if check.is_word_guessed(secret_word, player1.get_letters_guessed()):
+        print(check.message['won'])
+    if play_again == 'yes':
+        main()
 
 if __name__=='__main__':
     main()

@@ -1,10 +1,5 @@
 import check_hangman as check
 
-'''
-TODO: Fix same letter entry
-TODO: Display word at the end
-TODO: Fix ending menu infinite loop
-'''
 class Player():
     def __init__(self, name):
         '''
@@ -65,24 +60,16 @@ def main():
     print(check.message['welcome'])
     print(check.message['length'].format(len_secret_word=len(secret_word)))
     print(' '.join(['_' for underscore in secret_word]))
-    # print(check.game_so_far(secret_word))
+
     player1 = Player(name) # Creates player instance
 
     while not check.is_word_guessed(secret_word, player1.get_letters_guessed()):
-        if player1.get_guesses_left() < 1: # logic if player fails
-            print(eval(check.message['lost']))
-            play_again = input(check.message['play'])
-            while play_again != 'yes' or play_again != 'no': # Enforces user inputs yes or no at the end of game.
-                play_again = input(check.message['play'])
-            if play_again == 'yes':
-                break
-            else:
-                break
+        if player1.get_guesses_left() < 1: # If player fails break
+            break
 
         guess = input(check.message['guess'])
         while guess in player1.get_letters_guessed():
-            guess = input('Please enter a new letter: ')    
-        print(secret_word) #Delete
+            guess = input('Please enter a new letter: ')
         print('\n')
         while guess not in check.alphabet: # Makes sure user input is a letter
             guess = input(check.message['guess'])
@@ -104,25 +91,27 @@ def main():
     if check.is_word_guessed(secret_word, player1.get_letters_guessed()):
         print(check.message['won'])
 
-    play_again = input(check.message['play'])
-    while play_again != 'yes' or play_again != 'no': # Enforces user inputs yes or no at the end of game.
         play_again = input(check.message['play'])
-        print('play again:', play_again)
-        print(type(play_again))
-    if play_again == 'yes':
-        main()
+        while play_again not in check.message['acceptable_answers']: # Enforces user inputs yes or no at the end of game.
+            play_again = input(check.message['play'])
+            print('play again:', play_again)
+            play_again = input(check.message['play'])
+        if play_again == 'yes' or play_again == 'y':
+            main()
+        else:
+            exit()
+
     else:
-        exit()
+        print(eval(check.message['lost']))
+        play_again = input(check.message['play'])
+        while play_again not in check.message['acceptable_answers']:
+            play_again = input(check.message['play'])
+        if play_again == 'yes' or play_again == 'y':
+            main()
+        else:
+            exit()
+
+
 
 if __name__=='__main__':
     main()
-
-# -----This is debugging-------
-# player1 = Player(name)
-# print(player1)
-# print(player1.get_guesses_left())
-# player1.get_guesses_left(5)
-# print(player1.get_guesses_left())
-# player2 = Player('Jose')
-# print('Player 2 guesses', player2.get_guesses_left())
-# print(player1.get_guesses_left())

@@ -1,9 +1,20 @@
 import random
 import string
 
-message = {'congrats': 'Congratulations you won the game!',
-            'fail': 'You died!'}
 alphabet = string.ascii_lowercase
+message = {'won': 'Congratulations you won the game!',
+            'lost': '''"You died!\\nThe word was: {word}".format(word=secret_word)''',
+            'correct': 'Correct!',
+            'incorrect': 'Try again',
+            'length': "The word has {len_secret_word} letters",
+            'welcome': 'Welcome to hangman!',
+            'guess': 'Please guess a letter: ',
+            'play': 'Play again?\nyes | no: ',
+            'name': 'What is your name?: ',
+            'guesses_left': 'You have {guesses_left} guesses left',
+            'letters_guessed': '''"You have guessed these letters: {letters_guessed}".format(letters_guessed=player1.get_letters_guessed())''',
+            'available_letters': '''"You have these letters available: {available_letters}".format(available_letters=player1.get_available_letters())''',
+            'acceptable_answers': ('yes', 'y', 'n', 'no')}
 
 
 def load_word():
@@ -31,12 +42,22 @@ def game_so_far(secret_word, str_letters):
                 current_game[num] = letter
     return ' '.join(current_game)
 
-def is_word_guessed(secret_word):
+def is_word_guessed(secret_word, str_letters):
     '''
     Receives secret word as a STRING
     Returns bool if the secret word has been guessed
     '''
     if '_' not in game_so_far(secret_word, str_letters):
+        return True
+    else:
+        return False
+
+def is_letter_correct(secret_word, letter):
+    '''
+    Receives secret_word and letter as strings
+    Returns bool if the letter is in the secret_word
+    '''
+    if letter in secret_word:
         return True
     else:
         return False

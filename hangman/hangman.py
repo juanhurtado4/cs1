@@ -44,7 +44,7 @@ class Player():
         if letters_guessed == None:
             return self.available_letters
         else:
-            self.available_letters = ' '.join([letter for letter in check.alphabet if letter in letters_guessed])
+            self.available_letters = ' '.join([letter for letter in check.alphabet if letter not in letters_guessed])
 
     def get_guesses_left(self, guess_left=None):
         '''
@@ -81,6 +81,7 @@ def main():
                 break
 
         guess = input(check.message['guess'])
+        print(secret_word) #Delete
         print('\n')
         while guess not in check.alphabet: # Makes sure user input is a letter
             guess = input(check.message['guess'])
@@ -101,8 +102,16 @@ def main():
 
     if check.is_word_guessed(secret_word, player1.get_letters_guessed()):
         print(check.message['won'])
+
+    play_again = input(check.message['play'])
+    while play_again != 'yes' or play_again != 'no': # Enforces user inputs yes or no at the end of game.
+        play_again = input(check.message['play'])
+        print('play again:', play_again)
+        print(type(play_again))
     if play_again == 'yes':
         main()
+    else:
+        exit()
 
 if __name__=='__main__':
     main()

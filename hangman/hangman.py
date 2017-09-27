@@ -1,7 +1,6 @@
 import check_hangman as check
 
 '''
-TODO: Fix get_available_letters func. Return whole alphabet if no letters have been guessed. Else return the available letters left.
 TODO: Fix same letter entry
 TODO: Display word at the end
 TODO: Fix ending menu infinite loop
@@ -81,6 +80,8 @@ def main():
                 break
 
         guess = input(check.message['guess'])
+        while guess in player1.get_letters_guessed():
+            guess = input('Please enter a new letter: ')    
         print(secret_word) #Delete
         print('\n')
         while guess not in check.alphabet: # Makes sure user input is a letter

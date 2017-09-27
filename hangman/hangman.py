@@ -44,7 +44,7 @@ class Player():
         if letters_guessed == None:
             return self.available_letters
         else:
-            self.available_letters = ' '.join([letter for letter in check.alphabet if letter not in letters_guessed])
+            self.available_letters = ''.join([letter for letter in self.available_letters if letter not in letters_guessed])
 
     def get_guesses_left(self, guess_left=None):
         '''

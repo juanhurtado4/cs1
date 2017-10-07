@@ -1,0 +1,4 @@
+{
+  "test_grade_book.py::test_get_assignments_student": true,
+  "test_grade_book.py::test_init_student": true
+}

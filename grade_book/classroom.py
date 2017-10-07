@@ -12,22 +12,26 @@ read
 update
 delete
 
-be able to give everyone one assignment or one student`
+be able to give everyone one assignment or one student
 '''
 
 
 class Classroom():
     def __init__(self, class_name):
         self.class_name = class_name
-        self.class_dates = {}
+        # self.class_dates = {}
         self.roster = {} # Student id as key value student object itself
         self.student_assignments = []
         # self.student_grades = {} # Student_id key: Value: tuple of assignment and grade
         pass
 
-    def add_student_assignments(self, roster):
-        # iterate through dictionary of students and call student add assignment
-        pass
+    def add_student_assignments(self, roster, assignment, grade, student_id=None):
+        # iterate through dictionary of students and call student add
+        if student_id != None:
+            self.roster[student_id].add_assignment(assignment, grade)
+        elif student_id == None:
+            for student in self.roster.keys():
+                self.roster[student].add_assignment(assignment, grade)
 
     def add_student(self, student, student_id, classroom):
         '''

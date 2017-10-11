@@ -2,17 +2,19 @@ class Student():
     def __init__(self, name, student_id):
         self.name = name
         self.student_id = student_id
-        # Structure for student assignment:
-        # 'assignment_name': grade
-        self.assignment = {} # Assignment should be modeled as above
-        # classroom.roster[student_id] = name
+        # Structure for student assignment: 'assignment_name': grade
+        self.assignment = {}
 
     def __str__(self):
+        '''
+        Function overides default object string interpretation
+        '''
         return "This student's name is {name}".format(name=self.name)
 
     def add_assignment(self, assignment, grade):
         '''
-        Student_id & Grade: Integer. Assignment: String
+        Grade type: Integer
+        Assignment type: String
         Function adds new assignment to the dictionary of assignments.
         Returns none
         '''
@@ -20,34 +22,33 @@ class Student():
 
     def get_assignment(self):
         '''
-        Student_id: Integer.
-        Returns a nested list of assignments.
+        Function returns a dictionary of assignments.
         '''
-        # assignments = []
-        # list_assignments = {'juan': [['assignment1', 67], ['assignment2', 99]]} #DELETE
-        # for arr_assignments in list_assignments.values():
-        # for arr_assignments in self.assignment.values():
-        #     for single in arr_assignments:
-        #         assignments.append(single[0])
-
-        return [assignment for assignment in self.assignment.keys()]
-
-    # def update_assignment(self, new_assignment, old_assignment):
-    #     for index, assignment in enumerate(self.assignment[self.student_id]):
-    #         if assignment[0] == old_assignment:
-    #             self.assignment[self.student_id][index][0] = new_assignment
+        return self.assignment
+        # return [assignment for assignment in self.assignment.keys()]
 
     def delete_assignment(self, assignment):
+        '''
+        Assignment type: String
+        Function deletes assignment from dictionary of student assignments
+        '''
         self.assignment.pop(assignment)
 
     def update_assignment(self, new_assignment, old_assignment, grade):
+        '''
+        New Assignment & Old type: String
+        Grade type: Int
+        Function updates assignments
+        Returns void
+        '''
         self.delete_assignment(old_assignment)
         self.add_assignment(new_assignment, grade)
 
-
-
-
-
-'''
-crud assignment
-'''
+    def get_gpa(self):
+        '''
+        Function returns the avg grade for all the assignments
+        '''
+        final = 0
+        for grade in self.assignment.values():
+            final += grade
+        return final / len(self.assignment)

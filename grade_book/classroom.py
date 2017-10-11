@@ -14,7 +14,7 @@ delete
 
 be able to give everyone one assignment or one student
 '''
-
+# import student
 
 class Classroom():
     def __init__(self, class_name):
@@ -25,7 +25,7 @@ class Classroom():
         # self.student_grades = {} # Student_id key: Value: tuple of assignment and grade
         pass
 
-    def add_student_assignments(self, roster, assignment, grade, student_id=None):
+    def add_student_assignments(self, assignment, grade, student_id=None):
         # iterate through dictionary of students and call student add
         if student_id != None:
             self.roster[student_id].add_assignment(assignment, grade)
@@ -33,11 +33,12 @@ class Classroom():
             for student in self.roster.keys():
                 self.roster[student].add_assignment(assignment, grade)
 
-    def add_student(self, student, student_id, classroom):
+    # def add_student(self, student, student_id, classroom):
+    def add_student(self, student, student_id):
         '''
         Function doesn't return anything
         '''
-        classroom.roster[student_id] = student
+        self.roster[student_id] = student
 
     def remove_student(self, student, classroom):
         classroom.roster.pop(student)
@@ -53,6 +54,6 @@ def main():
 
 
 
-mike = Teacher('mike')
-mike_cs1 = mike.create_classroom('cs1')
-print(mike_cs1.class_name)
+# mike = Teacher('mike')
+# mike_cs1 = mike.create_classroom('cs1')
+# print(mike_cs1.class_name)

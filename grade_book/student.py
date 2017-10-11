@@ -5,6 +5,10 @@ class Student():
         # Structure for student assignment:
         # 'assignment_name': grade
         self.assignment = {} # Assignment should be modeled as above
+        # classroom.roster[student_id] = name
+
+    def __str__(self):
+        return "This student's name is {name}".format(name=self.name)
 
     def add_assignment(self, assignment, grade):
         '''
